@@ -1,0 +1,39 @@
+{% extends 'AppBundle::layout.html.twig' %}
+{% block styles %}
+{% endblock %}
+{% block body %}
+    <nav class="navbar navbar-inverse">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="{{ path('homepage') }}">{{ 'home.name'|trans }}</a>
+            </div>
+            <ul class="nav navbar-nav">
+                <li><a href="{{ path('homepage') }}">{{ 'home.welcome'|trans }}</a></li>
+                <li><a href="{{ path('cv') }}">{{ 'home.produits'|trans }}</a></li>
+
+                {% if is_granted("ROLE_ADMIN") %}
+                    <li class="active">
+                        <a href="{{ path('cv_update') }}">
+                            {% block title %}
+                                {{ 'update.update'|trans }}
+                            {% endblock %}
+                        </a>
+                    </li>
+                {% endif %}
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+                    <li><a href="{{ path('fos_user_security_logout') }}"><span class="glyphicon glyphicon-log-out"></span> {{ 'home.logout'|trans }}</a></li>
+                {% else %}
+                    <li><a href="{{ path('fos_user_registration_register') }}"><span class="glyphicon glyphicon-user"></span> {{ 'home.register'|trans }}</a></li>
+                    <li><a href="{{ path('fos_user_security_login') }}"><span class="glyphicon glyphicon-log-in"></span> {{ 'home.login'|trans }}</a></li>
+                {% endif %}
+
+            </ul>
+        </div>
+    </nav>
+    <div class="container-fluid">
+        <h1>{{ 'update.update'|trans }}</h1>
+        <img src="https://media.licdn.com/mpr/mpr/AAEAAQAAAAAAAArnAAAAJGZiZTU4NmM0LTUwZWItNDg5OS1hOWY4LTI1M2I5YTZmOWM1YQ.png" alt="cv">
+    </div>
+{% endblock %}

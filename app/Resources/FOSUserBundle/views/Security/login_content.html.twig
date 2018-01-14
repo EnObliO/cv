@@ -1,0 +1,58 @@
+{% trans_default_domain 'FOSUserBundle' %}
+{% if error %}
+    <div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+{% endif %}
+
+{% block body %}
+    <nav class="navbar navbar-inverse">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="{{ path('homepage') }}">{{ 'home.name'|trans }}</a>
+            </div>
+            <ul class="nav navbar-nav">
+                <li><a href="{{ path('homepage') }}">{{ 'home.welcome'|trans }}</a></li>
+                <li><a href="products">{{ 'home.produits'|trans }}</a></li>
+                <li><a href="{{ path('product_add') }}">{{ 'home.add'|trans }}</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+                    <li><a href="{{ path('fos_user_security_logout') }}"><span class="glyphicon glyphicon-log-out"></span> {{ 'home.logout'|trans }}</a></li>
+                    </a>
+                {% else %}
+                    <li><a href="{{ path('fos_user_registration_register') }}"><span class="glyphicon glyphicon-user"></span> {{ 'home.register'|trans }}</a></li>
+                    <li class="active"><a href="{{ path('fos_user_security_login') }}"><span class="glyphicon glyphicon-log-in"></span> {{ 'home.login'|trans }}</a></li>
+                {% endif %}
+
+            </ul>
+        </div>
+    </nav>
+    <div class="container">
+        <div clas="row">
+            <div class="col-md-6">
+                <h2>Connectez vous</h2>
+                <form action="{{ path("fos_user_security_check") }}" method="post">
+                    {% if csrf_token %}
+                        <input type="hidden" class="form-control" name="_csrf_token" value="{{ csrf_token }}" />
+                    {% endif %}
+                    <div class="form-group">
+                        <label for="username">{{ 'security.login.username'|trans }}</label>
+                        <input type="text" id="username" class="form-control" placeholder="Nom" name="_username" value="{{ last_username }}" required="required" />
+                    </div>
+
+                    <div class="form-group">
+                        <label for="password">{{ 'security.login.password'|trans }}</label>
+                        <input type="password" id="password" class="form-control" placeholder="Mdp" name="_password" required="required" />
+                    </div>
+
+                    <div class="form-group">
+                        <input type="checkbox" id="remember_me" name="_remember_me" value="on" />
+                        <label for="remember_me">{{ 'security.login.remember_me'|trans }}</label>
+                    </div>
+
+                    <input type="submit" class="btn btn-default" id="_submit" name="_submit" value="{{ 'security.login.submit'|trans }}" />
+                </form>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

@@ -1,0 +1,18 @@
+home:
+  name: MonSite
+  welcome: Accueil
+  produits: CV
+  login: Connexion
+  logout: Déconnexion
+  register: S'inscrire
+  add: Ajouter un produit
+
+products:
+  product: Mon CV
+  title: Titre
+  price: Prix
+  description: Description
+  submit: Envoyer
+
+update:
+  update: Mise à jour du CV
